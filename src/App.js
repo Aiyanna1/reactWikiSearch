@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Input from './components/container/input/input';
+import Articles from './components/container/articles/articles';
+import ArticleContent from './components/container/articlecontent/articleContent';
 
 function App() {
+  const [articles, setArticles] = useState([]);
+  const [selectedArticle, setSelectedArticle] = useState(null);
+
+  const handleSearch = (results) => {
+    setArticles(results);
+    setSelectedArticle(null);
+  }
+
+  const handleSelect = (article) => {
+    setSelectedArticle(article);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Input onSearch={handleSearch} />
+      <Articles articles={articles} onSelect={handleSelect} />
+      {selectedArticle && <ArticleContent article={selectedArticle} />}
+    </>
   );
 }
 
